@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="img/logo-h.png">
+<title>Hook+Bridge Studio</title>
+<meta name="description" content="Hook+Bridge is a human-led, AI-assisted creative branding studio in Los Angeles: brand systems, packaging, decks and monthly creative retainers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;600;800;900&display=swap">
+<style>
+/* Layout: the Hook+Bridge company presentation translated to the web. White pages,
+   charcoal + lime two-tone uppercase headings ("OUR SERVICES"), deep teal blocks,
+   the hexagon wood texture from the deck cover as the hero. Single light look, like the brand. */
+:root{
+  color-scheme:light;
+  --paper:#FFFFFF;
+  --tint:#F3F4F1;       /* warm off-white panels */
+  --char:#5D5E5E;       /* logo charcoal */
+  --text:#3B3C3C;       /* body copy */
+  --muted:#7A7B7B;
+  --line:#E2E3DF;
+  --lime:#C1D62E;       /* logo plus */
+  --lime-deep:#7E8C10;  /* lime for small text on white */
+  --teal:#083A48;       /* org-chart boxes */
+  --teal-2:#214E5A;
+  --on-teal:#FFFFFF;
+  --font:"Figtree","Avenir Next","Avenir","Nunito Sans",Arial,sans-serif;
+  --gut:max(16px, env(safe-area-inset-left, 0px));
+  --gutR:max(16px, env(safe-area-inset-right, 0px));
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{margin:0;background:var(--paper);color:var(--text);font:300 17px/1.6 var(--font);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:var(--gut);padding-right:var(--gutR)}
+h1,h2,h3{font-family:var(--font);line-height:1.02;margin:0;text-wrap:balance;color:var(--char)}
+h2{font-weight:900;text-transform:uppercase;letter-spacing:-.01em}
+h2 em,h1 em{font-style:normal;color:var(--lime)}
+.eyebrow{font:800 12px/1 var(--font);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+p{margin:0}
+b,strong{font-weight:600}
+
+/* nav */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:14px}
+.logo img{height:34px;width:auto;display:block}
+nav.links{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+nav.links a{text-decoration:none;font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--char)}
+nav.links a:hover{color:var(--teal)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:4px;background:var(--lime);color:var(--teal);font:800 14px/1 var(--font);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;border:0;cursor:pointer}
+.btn:hover{filter:brightness(1.05)}
+.btn.ghost{background:transparent;color:inherit;border:1.5px solid currentColor}
+nav.links a.btn,nav.links a.btn:hover{color:var(--teal)}
+@media (max-width:820px){nav.links a:not(.btn){display:none}.logo img{height:28px}}
+
+/* hero: the 2023 website background, work fanned out on both sides */
+.hero{position:relative;background:#fff url("img/hero-bg.jpg") center/cover no-repeat;border-bottom:1px solid var(--line)}
+.hero .wrap{position:relative;padding-block:84px 72px;display:flex;justify-content:center;text-align:center}
+.hero .inner{max-width:560px;background:rgba(255,255,255,.86);padding:8px 4px}
+.hero .mark{width:min(300px,72%);height:auto;display:block;margin:0 auto 30px}
+.hero h1{font-weight:900;text-transform:uppercase;font-size:clamp(34px,4.6vw,56px);letter-spacing:-.01em}
+.hero .lede{margin:20px auto 0;font-size:18px;max-width:30em}
+.hero .ctas{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.hero .btn.ghost{color:var(--char)}
+.stats{background:var(--teal)}
+.stats .wrap{display:grid;grid-template-columns:repeat(6,1fr);gap:0}
+.stats .wrap>div{padding:22px 12px;border-left:1px solid rgba(255,255,255,.14);text-align:center}
+.stats .wrap>div:first-child{border-left:0}
+.stats .v{font:900 30px/1 var(--font);color:#fff;font-variant-numeric:tabular-nums}
+.stats .v small{font:800 13px var(--font);color:var(--lime);margin-left:3px}
+.stats .k{margin-top:8px;font:600 11px/1.3 var(--font);letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+@media (max-width:900px){.stats .wrap{grid-template-columns:repeat(3,1fr)}.stats .wrap>div:nth-child(4){border-left:0}.stats .wrap>div:nth-child(n+4){border-top:1px solid rgba(255,255,255,.14)}}
+@media (max-width:700px){.hero{background-size:auto 100%}.hero .wrap{padding-block:48px}}
+@media (max-width:480px){.stats .wrap{grid-template-columns:1fr 1fr}.stats .wrap>div{border-left:0;border-top:1px solid rgba(255,255,255,.14)}.stats .wrap>div:nth-child(even){border-left:1px solid rgba(255,255,255,.14)}.stats .wrap>div:nth-child(-n+2){border-top:0}}
+
+/* clients */
+.clients{padding-block:30px;border-bottom:1px solid var(--line)}
+.clients .wrap{display:flex;gap:14px 32px;align-items:center;flex-wrap:wrap}
+.clients ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px 26px}
+.clients li{font:800 15px/1.2 var(--font);color:var(--char);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+.clients li:nth-child(even){color:var(--teal-2)}
+.stay{background:var(--tint);border-bottom:1px solid var(--line)}
+.stay .wrap{padding-block:40px;display:grid;grid-template-columns:1fr 1fr;gap:16px 48px;align-items:center}
+.stay-big{font:900 clamp(26px,3.2vw,40px)/1.1 var(--font);text-transform:uppercase;color:var(--char)}
+.stay-big em{font-style:normal;color:var(--lime)}
+.stay-sub{font-size:18px;max-width:34em}
+@media (max-width:760px){.stay .wrap{grid-template-columns:1fr}}
+body,p,li,h1,h2,h3,summary,dd{hyphens:none;-webkit-hyphens:none}
+.nb{white-space:nowrap}
+
+section.block{padding-block:88px}
+.head{display:grid;grid-template-columns:1fr 1.1fr;gap:40px;align-items:end;margin-bottom:44px}
+.head h2{font-size:clamp(36px,5vw,64px)}
+.head p{color:var(--muted);font-size:18px;max-width:36em}
+@media (max-width:860px){.head{grid-template-columns:1fr;gap:14px}section.block{padding-block:60px}}
+
+/* services */
+.services{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.svc{padding:26px 22px;background:var(--tint);border-top:5px solid var(--lime);display:flex;flex-direction:column;gap:12px;min-width:0}
+.svc h3{font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:.01em}
+.svc p{font-size:15.5px}
+.svc .proof{margin-top:auto;padding-top:12px;font:600 12.5px/1.5 var(--font);letter-spacing:.04em;color:var(--teal-2);border-top:1px solid var(--line)}
+@media (max-width:980px){.services{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.services{grid-template-columns:1fr}}
+
+/* work */
+.work{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.work a{text-decoration:none;display:grid;gap:10px;min-width:0}
+.work .ph{aspect-ratio:4/3;max-width:100%;overflow:hidden;background:var(--tint)}
+.work img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
+.work a:hover img{transform:scale(1.03)}
+.work .cap{display:flex;justify-content:space-between;gap:12px;align-items:baseline;border-bottom:2px solid var(--lime);padding-bottom:8px}
+.work .cap b{font:900 16px/1.25 var(--font);text-transform:uppercase;color:var(--char);letter-spacing:.02em}
+.work .cap span{font:600 11.5px/1.3 var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right}
+@media (max-width:900px){.work{grid-template-columns:1fr 1fr;row-gap:40px}}
+@media (max-width:520px){.work{grid-template-columns:1fr;row-gap:48px}.work a{gap:8px}}
+
+/* packages */
+#packages{background:var(--tint)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.tab{font:800 13px/1 var(--font);letter-spacing:.08em;text-transform:uppercase;padding:13px 18px;border-radius:4px;border:1.5px solid var(--char);background:transparent;color:var(--char);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--teal);border-color:var(--teal);color:#fff}
+.cat-intro{display:flex;justify-content:space-between;gap:16px 32px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
+.cat-intro p{color:var(--text);max-width:44em}
+.cat-intro .billing{font:800 12px/1 var(--font);letter-spacing:.14em;text-transform:uppercase;color:var(--teal-2)}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tier{background:#fff;padding:26px 24px;display:flex;flex-direction:column;gap:18px;min-width:0;border-top:5px solid var(--char)}
+.tier.pick{border-top-color:var(--lime);box-shadow:0 12px 32px rgba(8,58,72,.10)}
+.tier .name{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.tier .name h3{font-size:22px;font-weight:900;text-transform:uppercase}
+.badge{font:800 10.5px/1 var(--font);letter-spacing:.1em;text-transform:uppercase;padding:6px 8px;border-radius:3px;background:var(--lime);color:var(--teal)}
+.price{font:900 44px/1 var(--font);color:var(--teal);font-variant-numeric:tabular-nums}
+.price .from{display:block;font:800 11px/1 var(--font);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;min-height:11px}
+.price .per{font:600 15px var(--font);color:var(--muted);margin-left:4px}
+.tier .for{color:var(--muted);font-size:15px;min-height:3em}
+.tier ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.tier li{display:grid;grid-template-columns:16px 1fr;gap:10px;font-size:15.5px;line-height:1.45}
+.tier li::before{content:"+";font:900 16px/1.2 var(--font);color:var(--lime-deep)}
+.meta{margin-top:auto;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);padding-top:14px;gap:8px}
+.meta div{font:600 11px/1.4 var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.meta b{display:block;font:600 14px/1.3 var(--font);letter-spacing:0;text-transform:none;color:var(--text)}
+.fine{margin-top:26px;color:var(--muted);font-size:14.5px;max-width:62em}
+.term{display:inline-flex;border:1.5px solid var(--char);border-radius:4px;padding:3px;gap:3px;background:#fff}
+.term button{font:800 12.5px/1 var(--font);letter-spacing:.06em;text-transform:uppercase;padding:9px 12px;border-radius:3px;border:0;background:transparent;color:var(--char);cursor:pointer}
+.term button[aria-pressed="true"]{background:var(--teal);color:#fff}
+.term button small{font:800 11px var(--font);margin-left:4px;color:var(--lime-deep)}
+.term button[aria-pressed="true"] small{color:var(--lime)}
+.save{font:600 13px/1.3 var(--font);color:var(--lime-deep);min-height:1.3em;margin-top:-8px}
+.was{font:600 18px var(--font);color:var(--muted);text-decoration:line-through;margin-left:8px}
+@media (max-width:920px){.tiers{grid-template-columns:1fr}.tier .for{min-height:0}}
+
+/* process */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.step{border-top:5px solid var(--teal);padding-top:18px;display:grid;gap:10px;align-content:start;min-width:0}
+.step .n{font:900 13px/1 var(--font);color:var(--lime-deep);letter-spacing:.14em}
+.step h3{font-size:22px;font-weight:900;text-transform:uppercase}
+.step p{font-size:15.5px}
+@media (max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* AI band */
+#ai{background:var(--teal);color:var(--on-teal)}
+.ai{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+#ai .eyebrow{color:var(--lime)}
+.ai .big{font:900 clamp(28px,3.4vw,42px)/1.1 var(--font);text-transform:uppercase;color:#fff}
+.ai .big em{font-style:normal;color:var(--lime)}
+.ai dl{margin:0;display:grid;gap:22px}
+.ai dt{font:800 12px/1 var(--font);letter-spacing:.14em;text-transform:uppercase;color:var(--lime);margin-bottom:8px}
+.ai dd{margin:0;color:rgba(255,255,255,.85)}
+@media (max-width:860px){.ai{grid-template-columns:1fr;gap:28px}}
+
+/* faq */
+.faq{display:grid;grid-template-columns:1fr 1fr;gap:0 48px}
+details{border-top:1px solid var(--line);padding-block:18px}
+summary{cursor:pointer;font:600 18px/1.35 var(--font);color:var(--char);list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font:900 24px/1 var(--font);color:var(--lime-deep)}
+details[open] summary::after{content:"–"}
+details p{margin-top:10px;font-size:16px}
+@media (max-width:860px){.faq{grid-template-columns:1fr}}
+
+/* contact */
+.contact{background:var(--teal);color:#fff}
+.contact .wrap{padding-block:88px;display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:end}
+.contact h2{font-size:clamp(40px,6vw,76px);color:#fff}
+.contact p{color:rgba(255,255,255,.85);font-size:18px;margin-top:16px;max-width:30em}
+.mailbox{border:1px solid rgba(255,255,255,.25);border-radius:6px;padding:22px;display:grid;gap:14px}
+.mailbox .eyebrow{color:var(--lime)}
+.mailbox .addr{font:600 clamp(18px,2.2vw,23px)/1.3 var(--font);word-break:break-all;user-select:all}
+.mailbox .row{display:flex;gap:10px;flex-wrap:wrap}
+.contact .btn.ghost{color:#fff}
+.copied{font:600 13px var(--font);color:var(--lime);min-height:1em}
+@media (max-width:860px){.contact .wrap{grid-template-columns:1fr;padding-block:60px}}
+/* reviews */
+.scores{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-start}
+.score{display:grid;grid-template-columns:auto 1fr;column-gap:12px;align-items:center;text-decoration:none;padding:14px 18px;background:var(--tint);border-left:5px solid var(--lime)}
+.score b{grid-row:span 2;font:900 38px/1 var(--font);color:var(--teal)}
+.score .stars{color:var(--lime-deep);letter-spacing:2px;font-size:15px;line-height:1}
+.score span:last-child{font:600 12px/1.3 var(--font);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.score:hover{background:#ECEEE8}
+.reviews{columns:3 300px;column-gap:20px}
+.rv{break-inside:avoid;margin:0 0 20px;padding:24px 22px 20px;background:#fff;border:1px solid var(--line);border-top:5px solid var(--teal);display:grid;gap:16px}
+.rv blockquote{margin:0;font-size:16px;line-height:1.55;color:var(--text)}
+.rv blockquote::before{content:"★★★★★";display:block;color:var(--lime-deep);letter-spacing:2px;font-size:14px;margin-bottom:10px}
+.rv figcaption{display:grid;gap:2px;border-top:1px solid var(--line);padding-top:12px}
+.rv figcaption b{font:900 14px/1.3 var(--font);text-transform:uppercase;letter-spacing:.04em;color:var(--char)}
+.rv figcaption > span{font:600 12px/1.3 var(--font);letter-spacing:.04em;color:var(--muted)}
+.rv.feature{background:var(--teal);border-color:var(--teal)}
+.rv.feature blockquote{color:#fff;font-size:18px}
+.rv.feature blockquote::before{color:var(--lime)}
+.rv.feature figcaption{border-top-color:rgba(255,255,255,.2)}
+.rv.feature figcaption b{color:var(--lime)}
+.rv.feature figcaption > span{color:rgba(255,255,255,.75)}
+footer{background:#062c37;color:rgba(255,255,255,.7);padding-block:26px;font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+footer img{height:26px;width:auto;display:block}
+footer a{color:#fff}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Hook+Bridge home"><img src="img/logo-h.png" alt="Hook+Bridge" width="600" height="142"></a>
+    <nav class="links" aria-label="Main">
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#packages">Packages</a>
+      <a href="#process">Process</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn" href="#contact">Start a project</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="inner">
+        <img class="mark" src="img/logo-stack.png" alt="Hook+Bridge, creative branding strategies" width="900" height="400">
+        <h1>We <em>hook</em> your audience and <em>bridge</em> it to your brand.</h1>
+        <p class="lede">A human-led, AI-assisted creative branding studio in Los Angeles. We build brand systems, packaging, decks and ongoing creative that ships, stays on brand, and gets reused.</p>
+        <div class="ctas">
+          <a class="btn" href="#packages">See packages</a>
+          <a class="btn ghost" href="#work">See our work</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="stats" aria-label="Studio record">
+    <div class="wrap">
+      <div><div class="v">20<small>yrs</small></div><div class="k">Experience</div></div>
+      <div><div class="v">275</div><div class="k">Projects on Upwork</div></div>
+      <div><div class="v">100<small>%</small></div><div class="k">Upwork Job Success</div></div>
+      <div><div class="v">4.9<small>/5</small></div><div class="k">125 client ratings</div></div>
+      <div><div class="v">&lt;2<small>hrs</small></div><div class="k">Reply time</div></div>
+      <div><div class="v">EN·ES·PT</div><div class="k">Languages</div></div>
+    </div>
+  </section>
+
+  <section class="clients" aria-label="Some clients you may know">
+    <div class="wrap">
+      <span class="eyebrow">Some clients you may know</span>
+      <ul>
+        <li>Indeed</li><li>Hilton</li><li>Johnson &amp; Johnson</li><li>Hitachi Vantara</li><li>Dentsply Sirona</li><li>Los Angeles Marathon</li><li>Sizzler</li><li>Medtronic</li><li>Miami Music Project</li><li>DecoBike / Citi Bike</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="stay" aria-label="Client relationships">
+    <div class="wrap">
+      <p class="stay-big">Our clients don't just hire us. <em>They stay.</em></p>
+      <p class="stay-sub">Most clients work with us for more than three months, because a brand gets stronger when the same team keeps building it.</p>
+    </div>
+  </section>
+
+  <section class="block" id="services">
+    <div class="wrap">
+      <div class="head">
+        <h2>Our <em>services</em></h2>
+        <p>One creative director on every project, a small senior team, and the same brand rules from the first logo sketch to the last sell sheet.</p>
+      </div>
+      <div class="services">
+        <article class="svc">
+          <span class="eyebrow">01 · Identity</span>
+          <h3>Brand Systems</h3>
+          <p>Logos, color, type, icons and guidelines, plus the templates your team actually uses every week.</p>
+          <p class="proof">Indeed · IgniteTech · Trusted Nurse Staffing · LA Marathon</p>
+        </article>
+        <article class="svc">
+          <span class="eyebrow">02 · Product</span>
+          <h3>Packaging &amp; Launch</h3>
+          <p>Packaging systems for single products and full lines, ready for the printer, with the launch assets around them.</p>
+          <p class="proof">BioEmblem · Aspen Grove · Crunch Tech · skincare lines</p>
+        </article>
+        <article class="svc">
+          <span class="eyebrow">03 · Sales</span>
+          <h3>Decks &amp; Sales Material</h3>
+          <p>Pitch and sales decks, reports, white papers, one-pagers and data visualization that make the case clearly.</p>
+          <p class="proof">Johnson &amp; Johnson · Indeed · Panama Tourism · Culture Biosciences</p>
+        </article>
+        <article class="svc">
+          <span class="eyebrow">04 · Ongoing</span>
+          <h3>Creative Retainer</h3>
+          <p>A monthly creative team for campaigns, social, collateral and in-store materials, on brand every time.</p>
+          <p class="proof">Hilton Mexico City Santa Fe · Sizzler · Dentsply Sirona</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="reviews">
+    <div class="wrap">
+      <div class="head">
+        <h2>What clients <em>say</em></h2>
+        <div class="scores">
+          <a class="score" href="https://www.google.com/maps/place/Hook+%2B+Bridge/@25.8831322,-80.1306338,17z/data=!4m8!3m7!1s0x88d9b2e7256d5975:0xa7ab705a4e0d05ba!8m2!3d25.8831322!4d-80.1306338!9m1!1b1" target="_blank" rel="noopener"><b>5.0</b><span class="stars" aria-hidden="true">★★★★★</span><span>Google · 14 reviews</span></a>
+          <a class="score" href="https://www.upwork.com/freelancers/vanessaflores" target="_blank" rel="noopener"><b>4.9</b><span class="stars" aria-hidden="true">★★★★★</span><span>Upwork · 125 ratings · 100% Job Success</span></a>
+        </div>
+      </div>
+      <div class="reviews">
+        <figure class="rv feature">
+          <blockquote>“As the creator of the hit TV show CSI: Crime Scene Investigation, I was looking for someone with a sharp eye and a listening ear. Vanessa has both. … Bottom line is: she's a sensation. She will be a client and a trusted go to for life.”</blockquote>
+          <figcaption><b>Anthony Zuiker</b><span>Creator of CSI · Google review</span></figcaption>
+        </figure>
+        <figure class="rv">
+          <blockquote>“They did a complete rebrand for our organization which ended up contributing to our expansion into multiple new territories across the U.S and increasing our online presence from just over 1,000 followers to over 50,000 followers across the meta platforms and Tik Tok.”</blockquote>
+          <figcaption><b>Jessica M.</b><span>Community and Engagement Manager · Upwork</span></figcaption>
+        </figure>
+        <figure class="rv">
+          <blockquote>“My team and I have been working with H+B for almost a year now and they have been an absolute pleasure to work with. Vanessa and Germán have helped us with marketing materials, presentation decks, branding, and graphics, and every time they DELIVER!”</blockquote>
+          <figcaption><b>Sherilyn Segura</b><span>Executive Assistant · Google review</span></figcaption>
+        </figure>
+        <figure class="rv">
+          <blockquote>“Vanessa is my go-to graphic designer! She completes work so quickly with high quality and great attention to detail. … Vanessa truly is an extension of my team and will continue to be a part of it for the foreseeable future.”</blockquote>
+          <figcaption><b>Taylor W.</b><span>Upwork</span></figcaption>
+        </figure>
+        <figure class="rv">
+          <blockquote>“Vanessa and her team understand shoestring budgets, macgyver'ing solutions, and tight timelines like no one else. They are so easy to work with and deliver terrific work at a great price.”</blockquote>
+          <figcaption><b>Linda Yeh-Ostrinsky</b><span>Logo, sell sheets and renderings · Google review</span></figcaption>
+        </figure>
+        <figure class="rv">
+          <blockquote>“Vanessa and Dalimar did an amazing job designing the packaging of a smart card game for me and significantly improved the presentation and appeal of the cards themselves. … the quality of their work exceeded my expectations.”</blockquote>
+          <figcaption><b>Upwork client</b><span>Card game packaging · 2020</span></figcaption>
+        </figure>
+        <figure class="rv">
+          <blockquote>“Thank you for going above and beyond our request to craft work that was not only stunning, but received well before the deadline posted.”</blockquote>
+          <figcaption><b>Upwork client</b><span>Klaviyo email design · 2025</span></figcaption>
+        </figure>
+        <figure class="rv">
+          <blockquote>“She was extremely responsive, professional and delivered a high-quality product in line with expectations set at the start of the project. And to add, ahead of schedule.”</blockquote>
+          <figcaption><b>Upwork client</b><span>Packaged food product packaging · 2019</span></figcaption>
+        </figure>
+        <figure class="rv">
+          <blockquote>“We continue to use Hook + Bridge for all of our companies marketing material needs. Punctual, attentive to detail, and communicative.”</blockquote>
+          <figcaption><b>Alex De Young</b><span>Google review</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="work">
+    <div class="wrap">
+      <div class="head">
+        <h2>Our <em>work</em></h2>
+        <p>Brand systems, packaging, reports and campaigns we designed. Each one opens the full case study.</p>
+      </div>
+      <div class="work" id="workgrid"></div>
+    </div>
+  </section>
+
+  <section class="block" id="packages">
+    <div class="wrap">
+      <div class="head">
+        <h2>Our <em>packages</em></h2>
+        <p>Clear scopes and starting prices. Pick a package as it is, or use it as the starting point for a custom quote.</p>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Package categories" id="tabs"></div>
+      <div id="panel" role="tabpanel" aria-live="polite"></div>
+      <p class="fine">All prices are starting prices in USD and can change with scope, volume and timeline. Every package includes creative direction, a dedicated project lead, source files, and full rights to the final work once paid in full. Project work is billed 50% to start and 50% on delivery. Retainers are billed monthly in advance with a 3-month minimum; commit to 6 months and save 10%, or 12 months and save 15%. After the minimum term, cancel with at least 30 days notice.</p>
+    </div>
+  </section>
+
+  <section class="block" id="process">
+    <div class="wrap">
+      <div class="head">
+        <h2>Our <em>process</em></h2>
+        <p>The same four stages for a two-week deck or a three-month brand system. You always know what is next and who is doing it.</p>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="n">STEP 1</span><h3>Discovery</h3><p>A working session with your founders or marketing leads to define audience, positioning and what success looks like.</p></div>
+        <div class="step"><span class="n">STEP 2</span><h3>Direction</h3><p>Concepts and a written rationale. You choose a direction before any production starts.</p></div>
+        <div class="step"><span class="n">STEP 3</span><h3>Build</h3><p>We design, refine in set review rounds, and prepare final files to the specs your printers and manufacturers need.</p></div>
+        <div class="step"><span class="n">STEP 4</span><h3>Handoff</h3><p>Final files, guidelines and editable templates in Figma, Canva, InDesign or PowerPoint, so your team can keep going.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="ai">
+    <div class="wrap ai">
+      <div>
+        <p class="eyebrow">Human-led, AI-assisted</p>
+        <p class="big" style="margin-top:16px">AI makes us faster. <em>A creative director decides what ships.</em></p>
+      </div>
+      <div class="card">
+        <dl>
+          <div><dt>A living brand brief</dt><dd>Each client gets a brand-context brief we keep up to date, so every asset starts from your real voice, rules and audience.</dd></div>
+          <div><dt>Tools we use daily</dt><dd>Claude and Adobe Firefly / Generative Fill, alongside Adobe Creative Cloud, Figma and Canva.</dd></div>
+          <div><dt>Human review on everything</dt><dd>Type, hierarchy, detail and brand fit are checked by a person before anything reaches you.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="faq">
+    <div class="wrap">
+      <div class="head"><h2>Your <em>questions</em></h2><p>If yours isn't here, write to us and you'll get an answer from the creative director.</p></div>
+      <div class="faq">
+        <div>
+          <details><summary>How fast will I hear back?</summary><p>We always reply in under 2 hours. On retainers, small requests are usually delivered the next business day. Tell us your deadline up front and we will tell you plainly if it works.</p></details>
+          <details><summary>What do I need to send to get a quote?</summary><p>What you are making, who it is for, your deadline and any existing brand files. A 20-minute call is usually enough.</p></details>
+          <details><summary>How many revisions are included?</summary><p>Each package lists its review rounds. Extra rounds or new requests are quoted before we start them, never billed by surprise.</p></details>
+          <details><summary>Do you work in Spanish?</summary><p>Yes. We design in English and Spanish, and bilingual guidelines, signage and materials are a regular part of our work.</p></details>
+        </div>
+        <div>
+          <details><summary>Who owns the work?</summary><p>You do. Full rights to the final work transfer to you once the project is paid in full, and source files are included. We only show finished pieces in our portfolio.</p></details>
+          <details><summary>How do retainer terms work?</summary><p>Every retainer starts with a 3-month minimum and then runs month to month. Commit to 6 months and save 10%, or to 12 months and save 15%. After the minimum term, you can cancel with at least 30 days written notice.</p></details>
+          <details><summary>Do you handle printing?</summary><p>We don't print or manage production. We prepare print-ready and production-ready files built to your printer's or manufacturer's specs, so you can send them straight to production.</p></details>
+          <details><summary>Can you work inside our existing brand?</summary><p>Yes. Many clients come to us with guidelines already in place. We work within them, and tell you where they need updating.</p></details>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div>
+      <h2>Let's build the <em>bridge</em>.</h2>
+      <p>Tell us what you are making and when you need it. You'll hear back in under 2 hours.</p>
+    </div>
+    <div class="mailbox">
+      <span class="eyebrow">Email</span>
+      <span class="addr" id="addr">vanessa@hookbridge.com</span>
+      <div class="row">
+        <button class="btn" id="copy" type="button">Copy email</button>
+        <a class="btn ghost" href="mailto:vanessa@hookbridge.com?subject=New%20project%20for%20Hook%2BBridge">Open email app</a>
+      </div>
+      <span class="copied" id="copied" aria-live="polite"></span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <img src="img/logo-white-h.png" alt="Hook+Bridge" width="600" height="142">
+    <span>© 2026 Hook+Bridge · Creative branding strategies · Los Angeles, CA</span>
+    <span><a href="https://iamvanessaflores.com" target="_blank" rel="noopener">iamvanessaflores.com</a> · <a href="https://www.linkedin.com/in/ssota" target="_blank" rel="noopener">LinkedIn</a></span>
+  </div>
+</footer>
+
+<script>
+const CATS = [
+  { id:"brand", label:"Brand Systems", billing:"One-time project",
+    intro:"A brand your team can use without calling a designer every time.",
+    tiers:[
+      { name:"Refresh", price:"$5,000", for:"For established businesses whose look has drifted.",
+        items:["Logo refinement and lockups","Color and type system","Brand guidelines (up to 15 pages)","5 editable templates: social, deck cover, one-pager","2 review rounds"],
+        time:"3–4 weeks", files:"AI, PDF, Canva/Figma" },
+      { name:"System", price:"$9,000", pick:true, for:"For new brands or full rebrands.",
+        items:["Brand strategy session","3 identity concepts, 1 developed","Full guidelines (30+ pages)","Icon set and stationery","15-template library in Figma, Canva or InDesign","3 review rounds"],
+        time:"5–6 weeks", files:"Full source + guidelines PDF" },
+      { name:"Platform", price:"$15,000", from:true, for:"For companies with several products or sub-brands.",
+        items:["Brand architecture across sub-brands","Guidelines for the master brand and each sub-brand","Signage, vehicle and environmental applications","Template library per team","Rollout support for your internal teams"],
+        time:"7–8 weeks", files:"Full system + template library" }
+    ]},
+  { id:"pack", label:"Packaging & Launch", billing:"One-time project",
+    intro:"Print-ready packaging and the launch assets that sell it, designed as one system.",
+    tiers:[
+      { name:"Single Product", price:"$3,500", for:"One SKU, ready for the printer.",
+        items:["Packaging design for 1 SKU","Built on your printer's dieline","3 product mockups","5 launch social assets","2 review rounds"],
+        time:"2–3 weeks", files:"Print-ready PDF + source" },
+      { name:"Product Line", price:"$7,500", pick:true, for:"A family of products that read as one brand.",
+        items:["Packaging system for up to 4 SKUs","Label architecture for flavors, sizes or lines","Print-ready files for each SKU","Mockups for web and retail listings","10 launch social assets"],
+        time:"4–6 weeks", files:"Print-ready files per SKU" },
+      { name:"Launch Suite", price:"$12,500", from:true, for:"A full line plus the campaign around it.",
+        items:["Packaging system for 5+ SKUs","Launch campaign concept","Sell sheets and retail POP","Email and social launch kit","Production-ready files for your printer or manufacturer"],
+        time:"6–10 weeks", files:"Packaging + campaign kit" }
+    ]},
+  { id:"decks", label:"Decks & Sales Material", billing:"One-time project",
+    intro:"Decks, reports and sales material that make the case clearly and stay editable.",
+    tiers:[
+      { name:"Pitch Deck", price:"$2,500", for:"One deck for a raise, a pitch or a keynote.",
+        items:["Up to 20 custom slides","Master template for future decks","Charts and data visualization","PowerPoint, Keynote or Google Slides","2 review rounds"],
+        time:"1–2 weeks", files:"Editable deck + PDF" },
+      { name:"Sales Kit", price:"$5,500", pick:true, for:"Everything your sales team sends.",
+        items:["Sales deck (up to 30 slides)","3 one-pagers","Case study template","Master slide template","Brand-aligned icons and charts"],
+        time:"3–4 weeks", files:"Editable kit + PDFs" },
+      { name:"Report & Library", price:"$8,500", from:true, for:"Annual reports, white papers and team templates.",
+        items:["Annual, impact or metrics report, or a white paper","Data visualization system","Template library in Figma, Canva, InDesign or PowerPoint","Team handoff session"],
+        time:"4–8 weeks", files:"Report + template library" }
+    ]},
+  { id:"retainer", label:"Monthly Creative Retainer", billing:"Billed monthly", monthly:true,
+    intro:"A senior creative team on call for the work that never stops.",
+    tiers:[
+      { name:"Starter", price:"$3,500", for:"Steady brand and social support.",
+        items:["Up to 15 assets a month: social, ads, flyers, one-pagers","Replies in under 2 hours","Small requests usually delivered next business day","2 review rounds per asset","Monthly planning call"],
+        time:"3-month minimum", files:"Source files monthly", base:3500 },
+      { name:"Growth", price:"$6,500", pick:true, for:"Campaigns plus the day-to-day.",
+        items:["Up to 35 assets a month","1 campaign concept a month","1 deck, report or guide a month","Weekly check-in","Priority queue"],
+        time:"3-month minimum", files:"Source files monthly", base:6500 },
+      { name:"Embedded", price:"$9,500", from:true, for:"Your outsourced creative department.",
+        items:["Dedicated creative director and designer","Ongoing request queue within the agreed scope","Campaigns, presentations and in-store materials","Guidelines and template upkeep","Print-ready files for your vendors","Joins your team meetings"],
+        time:"3-month minimum", files:"Shared drive, always current", base:9500 }
+    ]}
+];
+
+const WORK = [
+  ["indeed","Indeed","Campaigns · sales material"],
+  ["ignitetech","IgniteTech","Rebrand · guidelines"],
+  ["trusted","Trusted Nurse Staffing","Rebrand · sub-brands"],
+  ["lamarathon","Los Angeles Marathon","Brand expansion · OOH"],
+  ["jnj","Johnson & Johnson","Reports · data viz"],
+  ["hilton","Hilton Mexico City Santa Fe","Campaign · social"],
+  ["dentsply","Dentsply Sirona","Guidelines · co-branding"],
+  ["ayla","Ayla Oasis","Bilingual brand · signage"],
+  ["sizzler","Sizzler","In-store guides · POP"],
+  ["propolis","Propolis","Branding · interiors"],
+  ["miamimusic","Miami Music Project","Branding · annual reports"],
+  ["decobike","DecoBike → Citi Bike","System launch · wayfinding"]
+];
+document.getElementById("workgrid").innerHTML = WORK.map(([k,n,t])=>`
+  <a href="https://iamvanessaflores.com/work/${k}.html" target="_blank" rel="noopener">
+    <div class="ph"><img src="img/${k}.jpg" alt="${n.replace(/&/g,"&amp;")} work by Hook+Bridge" loading="lazy" width="800" height="600"></div>
+    <div class="cap"><b>${n.replace(/&/g,"&amp;")}</b><span>${t}</span></div>
+  </a>`).join("");
+
+const tabs = document.getElementById("tabs");
+const panel = document.getElementById("panel");
+let TERM = 3;
+const OFF = {3:0, 6:.10, 12:.15};
+const usd = n => "$" + Math.round(n).toLocaleString("en-US");
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+function render(id){
+  const c = CATS.find(x=>x.id===id) || CATS[0];
+  [...tabs.children].forEach(b=>b.setAttribute("aria-selected", b.dataset.id===c.id));
+  const termUI = c.monthly ? `<div class="term" role="group" aria-label="Commitment">${[3,6,12].map(m=>`<button type="button" data-term="${m}" aria-pressed="${m===TERM}">${m} months${OFF[m]?`<small>−${OFF[m]*100}%</small>`:""}</button>`).join("")}</div>` : `<span class="billing">${esc(c.billing)}</span>`;
+  panel.innerHTML = `
+    <div class="cat-intro"><p>${esc(c.intro)}</p>${termUI}</div>
+    <div class="tiers">${c.tiers.map(t=>{
+      const off = c.monthly ? OFF[TERM] : 0;
+      const price = c.monthly ? usd(t.base*(1-off)) : t.price;
+      const save = c.monthly && off ? `Save ${usd(t.base*off*TERM)} over ${TERM} months` : (c.monthly ? "3-month minimum" : "");
+      return `
+      <article class="tier${t.pick?" pick":""}">
+        <div class="name"><h3>${esc(t.name)}</h3>${t.pick?'<span class="badge">Most chosen</span>':""}</div>
+        <div class="price"><span class="from">${t.from?"Starting at":""}</span>${price}${c.monthly?'<span class="per">/ month</span>':""}${off?`<span class="was">${t.price}</span>`:""}</div>
+        ${c.monthly?`<p class="save">${save}</p>`:""}
+        <p class="for">${esc(t.for)}</p>
+        <ul>${t.items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>
+        <div class="meta"><div><b>${c.monthly?TERM+" months":esc(t.time)}</b>${c.monthly?"Term":"Timeline"}</div><div><b>${esc(t.files)}</b>Delivered</div></div>
+      </article>`}).join("")}
+    </div>`;
+  panel.querySelectorAll("[data-term]").forEach(b=>b.addEventListener("click",()=>{TERM=+b.dataset.term;render(c.id)}));
+}
+CATS.forEach((c,i)=>{
+  const b=document.createElement("button");
+  b.className="tab"; b.type="button"; b.role="tab"; b.id="tab-"+c.id; b.dataset.id=c.id; b.textContent=c.label;
+  b.addEventListener("click",()=>{render(c.id);try{localStorage.setItem("hbTab",c.id)}catch(e){}});
+  tabs.appendChild(b);
+});
+let start="brand"; try{start=localStorage.getItem("hbTab")||"brand"}catch(e){}
+render(start);
+
+// keep hyphenated words (sub-brands, one-pagers) on one line
+function noBreakHyphens(root){
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>/[A-Za-z0-9]-[A-Za-z0-9]/.test(n.nodeValue)&&!n.parentElement.closest("script,style,.nb")?1:2});
+  const nodes=[];while(w.nextNode())nodes.push(w.currentNode);
+  nodes.forEach(n=>{const f=document.createDocumentFragment();n.nodeValue.split(/([A-Za-z0-9+]+(?:-[A-Za-z0-9+]+)+)/).forEach((p,i)=>{if(i%2){const s=document.createElement("span");s.className="nb";s.textContent=p;f.appendChild(s)}else if(p)f.appendChild(document.createTextNode(p))});n.replaceWith(f)});
+}
+noBreakHyphens(document.body);
+new MutationObserver(()=>noBreakHyphens(panel)).observe(panel,{childList:true});
+
+document.getElementById("copy").addEventListener("click",()=>{
+  const msg=document.getElementById("copied"); const addr=document.getElementById("addr").textContent;
+  const sel=()=>{const r=document.createRange();r.selectNodeContents(document.getElementById("addr"));const s=getSelection();s.removeAllRanges();s.addRange(r);msg.textContent="Selected. Press Cmd+C to copy."};
+  try{navigator.clipboard.writeText(addr).then(()=>{msg.textContent="Copied to clipboard."},sel)}catch(e){sel()}
+});
+</script>
+
+</body>
+</html>
