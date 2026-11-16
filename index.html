@@ -80,8 +80,10 @@ nav.links a.btn,nav.links a.btn:hover{color:var(--teal)}
 
 /* clients */
 .clients{padding-block:30px;border-bottom:1px solid var(--line)}
-.clients .wrap{display:flex;gap:14px 32px;align-items:center;flex-wrap:wrap}
-.clients ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px 26px}
+.clients .wrap{display:flex;flex-direction:column;gap:16px;align-items:center;text-align:center}
+.clients ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:12px 30px;max-width:1000px}
+.clients li.brk{flex-basis:100%;height:0;padding:0;margin:-6px 0}
+@media (max-width:900px){.clients li.brk{display:none}}
 .clients li{font:800 15px/1.2 var(--font);color:var(--char);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
 .clients li{color:var(--teal)}
 .clients li:nth-child(even){color:var(--lime-deep)}
@@ -270,7 +272,7 @@ footer a{color:#fff}
     <div class="wrap">
       <span class="eyebrow">Some clients you may know</span>
       <ul>
-        <li>Indeed</li><li>Hilton</li><li>Johnson &amp; Johnson</li><li>Hitachi Vantara</li><li>Dentsply Sirona</li><li>Los Angeles Marathon</li><li>Sizzler</li><li>Medtronic</li><li>Miami Music Project</li><li>DecoBike / Citi Bike</li>
+        <li>Indeed</li><li>Hilton</li><li>Johnson &amp; Johnson</li><li>Hitachi Vantara</li><li>Dentsply Sirona</li><li class="brk" aria-hidden="true"></li><li>Los Angeles Marathon</li><li>Sizzler</li><li>Medtronic</li><li>Miami Music Project</li><li>DecoBike / Citi Bike</li>
       </ul>
     </div>
   </section>
