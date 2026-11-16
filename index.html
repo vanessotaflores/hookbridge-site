@@ -385,7 +385,7 @@ footer a{color:#fff}
       </div>
       <div class="tabs" role="tablist" aria-label="Package categories" id="tabs"></div>
       <div id="panel" role="tabpanel" aria-live="polite"></div>
-      <p class="fine">All prices are starting prices in USD and can change with scope, volume and timeline. Every package includes creative direction, a dedicated project lead, source files, and full rights to the final work once paid in full. Project work is billed 50% to start and 50% on delivery. Retainers are billed monthly in advance with a 3-month minimum; commit to 6 months and save 10%, or 12 months and save 15%. After the minimum term, cancel with at least 30 days notice.</p>
+      <p class="fine">All prices are starting prices in USD and can change with scope, volume and timeline. Every package includes creative direction, a dedicated project lead, source files, and full rights to the final work once paid in full. Project work is billed 50% to start and 50% on delivery. Retainers and Monthly Finish are billed monthly in advance with a 3-month minimum; commit to 6 months and save 10%, or 12 months and save 15%. After the minimum term, cancel with at least 30 days notice.</p>
     </div>
   </section>
 
@@ -415,6 +415,7 @@ footer a{color:#fff}
           <div><dt>A living brand brief</dt><dd>Each client gets a brand-context brief we keep up to date, so every asset starts from your real voice, rules and audience.</dd></div>
           <div><dt>Tools we use daily</dt><dd>Claude and Adobe Firefly / Generative Fill, alongside Adobe Creative Cloud, Figma and Canva.</dd></div>
           <div><dt>Human review on everything</dt><dd>Type, hierarchy, detail and brand fit are checked by a person before anything reaches you.</dd></div>
+          <div><dt>Finished by Humans</dt><dd>Already making content with AI? Send it to us and we polish it until it looks like your brand, not like a prompt. <a href="#packages" style="color:var(--lime)">See the packages</a>.</dd></div>
         </dl>
       </div>
     </div>
@@ -508,6 +509,19 @@ const CATS = [
         items:["Annual, impact or metrics report, or a white paper","Data visualization system","Template library in Figma, Canva, InDesign or PowerPoint","Team handoff session"],
         time:"4–8 weeks", files:"Report + template library" }
     ]},
+  { id:"finished", label:"Finished by Humans", billing:"Per batch",
+    intro:"Made it with AI? We make it on-brand. Send us what you generated and we fix the type, layout, color and details, then deliver files ready for web and print.",
+    tiers:[
+      { name:"Quick Fix", price:"$750", for:"A few AI pieces that need a professional finish.",
+        items:["Up to 5 pieces: social posts, ads, slides or flyers","Type, layout and color brought back to your brand","Cleanup of AI artifacts: garbled text, hands, edges, odd details","1 review round"],
+        time:"2–3 business days", files:"Web and print-ready" },
+      { name:"Batch", price:"$1,950", pick:true, for:"A campaign or deck your team drafted with AI.",
+        items:["Up to 15 pieces","Everything in Quick Fix","Brand check against your guidelines","Each piece resized to 3 formats","2 review rounds"],
+        time:"5–7 business days", files:"Source files + exports" },
+      { name:"Monthly Finish", price:"$3,500", per:"/ month", base:3500, for:"Your team keeps generating, we keep it on-brand.",
+        items:["Up to 30 pieces a month","Everything in Batch","Priority queue","A short monthly note on what to fix in your prompts"],
+        time:"3-month minimum", files:"Source files monthly" }
+    ]},
   { id:"retainer", label:"Monthly Creative Retainer", billing:"Billed monthly", monthly:true,
     intro:"A senior creative team on call for the work that never stops.",
     tiers:[
@@ -552,21 +566,21 @@ function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
 function render(id){
   const c = CATS.find(x=>x.id===id) || CATS[0];
   [...tabs.children].forEach(b=>b.setAttribute("aria-selected", b.dataset.id===c.id));
-  const termUI = c.monthly ? `<div class="term" role="group" aria-label="Commitment">${[3,6,12].map(m=>`<button type="button" data-term="${m}" aria-pressed="${m===TERM}">${m} months${OFF[m]?`<small>−${OFF[m]*100}%</small>`:""}</button>`).join("")}</div>` : `<span class="billing">${esc(c.billing)}</span>`;
+  const termUI = (c.monthly||c.tiers.some(t=>t.base)) ? `<div class="term" role="group" aria-label="Commitment">${[3,6,12].map(m=>`<button type="button" data-term="${m}" aria-pressed="${m===TERM}">${m} months${OFF[m]?`<small>−${OFF[m]*100}%</small>`:""}</button>`).join("")}</div>` : `<span class="billing">${esc(c.billing)}</span>`;
   panel.innerHTML = `
     <div class="cat-intro"><p>${esc(c.intro)}</p>${termUI}</div>
     <div class="tiers">${c.tiers.map(t=>{
-      const off = c.monthly ? OFF[TERM] : 0;
-      const price = c.monthly ? usd(t.base*(1-off)) : t.price;
-      const save = c.monthly && off ? `Save ${usd(t.base*off*TERM)} over ${TERM} months` : (c.monthly ? "3-month minimum" : "");
+      const mo = c.monthly || !!t.base; const off = mo ? OFF[TERM] : 0;
+      const price = mo ? usd(t.base*(1-off)) : t.price;
+      const save = mo && off ? `Save ${usd(t.base*off*TERM)} over ${TERM} months` : (mo ? "3-month minimum" : "");
       return `
       <article class="tier${t.pick?" pick":""}">
         <div class="name"><h3>${esc(t.name)}</h3>${t.pick?'<span class="badge">Most chosen</span>':""}</div>
-        <div class="price"><span class="from">${t.from?"Starting at":""}</span>${price}${c.monthly?'<span class="per">/ month</span>':""}${off?`<span class="was">${t.price}</span>`:""}</div>
-        ${c.monthly?`<p class="save">${save}</p>`:""}
+        <div class="price"><span class="from">${t.from?"Starting at":""}</span>${price}${c.monthly?'<span class="per">/ month</span>':(t.per?'<span class="per">'+t.per+'</span>':"")}${off?`<span class="was">${t.price}</span>`:""}</div>
+        ${(c.monthly||c.tiers.some(x=>x.base))?`<p class="save">${save}</p>`:""}
         <p class="for">${esc(t.for)}</p>
         <ul>${t.items.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>
-        <div class="meta"><div><b>${c.monthly?TERM+" months":esc(t.time)}</b>${c.monthly?"Term":"Timeline"}</div><div><b>${esc(t.files)}</b>Delivered</div></div>
+        <div class="meta"><div><b>${mo?TERM+" months":esc(t.time)}</b>${mo?"Term":"Timeline"}</div><div><b>${esc(t.files)}</b>Delivered</div></div>
       </article>`}).join("")}
     </div>`;
   panel.querySelectorAll("[data-term]").forEach(b=>b.addEventListener("click",()=>{TERM=+b.dataset.term;render(c.id)}));
