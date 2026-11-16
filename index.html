@@ -456,17 +456,11 @@ footer a{color:#fff}
       <p>Tell us what you are making and when you need it. You'll hear back in under 2 hours.</p>
     </div>
     <div class="mailbox">
-      <span class="eyebrow">Email</span>
-      <span class="addr" id="addr">vanessa@hookbridge.com</span>
+      <span class="eyebrow">Get in touch</span>
       <div class="row">
-        <button class="btn" id="copy" type="button">Copy email</button>
-        <a class="btn ghost" href="mailto:vanessa@hookbridge.com?subject=New%20project%20for%20Hook%2BBridge">Open email app</a>
-      </div>
-      <span class="copied" id="copied" aria-live="polite"></span>
-      <span class="eyebrow" style="margin-top:6px">Or message us</span>
-      <div class="row">
+        <a class="btn" href="mailto:vanessa@hookbridge.com?subject=New%20project%20for%20Hook%2BBridge">Email us</a>
         <a class="btn" href="https://wa.me/17868791359?text=Hi%20Vanessa%2C%20I%20found%20Hook%2BBridge%20online%20and%20would%20like%20to%20talk%20about%20a%20project." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 3C7 3 3 6.6 3 11c0 2.3 1.1 4.4 2.9 5.9L5 21l4.3-2.2c.9.2 1.8.3 2.7.3 5 0 9-3.6 9-8s-4-8-9-8z"/></svg> WhatsApp</a>
-        <a class="btn ghost" href="https://t.me/HookBridgebot?start=website" target="_blank" rel="noopener">Telegram</a>
+        <a class="btn ghost" href="https://t.me/ssota" target="_blank" rel="noopener">Telegram</a>
       </div>
     </div>
   </div>
@@ -616,11 +610,7 @@ function noBreakHyphens(root){
 noBreakHyphens(document.body);
 new MutationObserver(()=>noBreakHyphens(panel)).observe(panel,{childList:true});
 
-document.getElementById("copy").addEventListener("click",()=>{
-  const msg=document.getElementById("copied"); const addr=document.getElementById("addr").textContent;
-  const sel=()=>{const r=document.createRange();r.selectNodeContents(document.getElementById("addr"));const s=getSelection();s.removeAllRanges();s.addRange(r);msg.textContent="Selected. Press Cmd+C to copy."};
-  try{navigator.clipboard.writeText(addr).then(()=>{msg.textContent="Copied to clipboard."},sel)}catch(e){sel()}
-});
+
 </script>
 
 </body>
